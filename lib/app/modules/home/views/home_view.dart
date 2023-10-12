@@ -52,7 +52,7 @@ class HomeView extends GetView<HomeController> {
                 child: Row(
                   children: [
                     Container(
-                      width: 240,
+                      width: MediaQuery.of(context).size.width * .8,
                       height: 34,
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -67,7 +67,7 @@ class HomeView extends GetView<HomeController> {
                           contentPadding: EdgeInsets.fromLTRB(8, 0, 0, 4),
                           border: InputBorder
                               .none, // Hapus border pada input decoration TextField
-                          hintText: 'Cari Produk',
+                          hintText: 'Cari Kafe',
                           hintStyle: TextStyle(fontSize: 12),
                           prefixIcon: Icon(
                             Icons.search,

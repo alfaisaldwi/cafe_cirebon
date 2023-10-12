@@ -3,7 +3,10 @@ import 'package:get/get.dart';
 class HomeController extends GetxController {
   //TODO: Implement HomeController
 
-  List caraosel = ['https://radarcirebon.disway.id/upload/7ae51109cf523833c1f3f0e63be3c8de.PNG','https://radarcirebon.disway.id//upload/ad43ddb6bd74d152485dc028b9d0f9d2.PNG'];
+  List caraosel = [
+    'https://radarcirebon.disway.id/upload/7ae51109cf523833c1f3f0e63be3c8de.PNG',
+    'https://radarcirebon.disway.id//upload/ad43ddb6bd74d152485dc028b9d0f9d2.PNG'
+  ].obs;
   List category = [].obs;
   RxList<Map<String, dynamic>> cafeData = <Map<String, dynamic>>[
     {
