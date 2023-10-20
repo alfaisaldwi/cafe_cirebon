@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cafe_cirebon/app/style/color_primary.dart';
 import 'package:cafe_cirebon/app/utils/convertToIdr.dart';
+import 'package:cafe_cirebon/app/widgets/search_widget.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -26,58 +27,10 @@ class HomeView extends GetView<HomeController> {
             child: Center(
               child: GestureDetector(
                 onTap: () {
-                  // showSearch(
-                  //   context: context,
-                  //   delegate: SearchPage(
-                  //     barTheme: ThemeData.light(useMaterial3: true),
-                  //     onQueryUpdate: print,
-                  //     items: controller.products,
-                  //     searchLabel: 'Cari..',
-                  //     suggestion: const Center(
-                  //       child: Text('Cari produk yang kamu kebutuhan'),
-                  //     ),
-                  //     failure: const Center(
-                  //       child: Text('Produk yang kamu cari tidak ada :('),
-                  //     ),
-                  //     filter: (product) {
-                  //       return [
-                  //         product.title,
-                  //       ];
-                  //     },
-                  //     builder: (product) => SearchView(
-                  //       products: product,
-                  //     ),
-                  //   ),
-                  // );
+                  SearchWidget.showCustomSearch(context, controller.cafeData);
                 },
                 child: Row(
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width * .8,
-                      height: 34,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10.0),
-                        border: Border.all(color: Colors.grey),
-                      ),
-                      child: const TextField(
-                        enabled: false,
-                        textAlign: TextAlign.justify,
-                        decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          contentPadding: EdgeInsets.fromLTRB(8, 0, 0, 4),
-                          border: InputBorder
-                              .none, // Hapus border pada input decoration TextField
-                          hintText: 'Cari Kafe',
-                          hintStyle: TextStyle(fontSize: 12),
-                          prefixIcon: Icon(
-                            Icons.search,
-                            size: 16,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                  children: [SearchForm()],
                 ),
               ),
             ),
