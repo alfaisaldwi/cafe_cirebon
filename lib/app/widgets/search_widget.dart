@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:search_page/search_page.dart';
 
 class SearchWidget {
-  static showCustomSearch(BuildContext context, List<dynamic> products) {
+  static showCustomSearch(
+      BuildContext context, List<dynamic> products) {
     showSearch(
       context: context,
       delegate: SearchPage(
@@ -32,10 +33,13 @@ class SearchWidget {
 }
 
 class SearchForm extends StatelessWidget {
+  final double width; // Tambahkan parameter width
+
+  SearchForm({required this.width});
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.sizeOf(context).width * 0.8,
+      width: width,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10.0),

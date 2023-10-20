@@ -7,6 +7,7 @@ import 'app/routes/app_pages.dart';
 void main() {
   runApp(
     GetMaterialApp(
+      theme: ThemeData.light(),
       title: "Cafe Cirebon",
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
@@ -14,4 +15,3 @@ void main() {
     ),
   );
 }
- 
