@@ -1,7 +1,9 @@
+import 'package:carousel_slider/carousel_controller.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
-  //TODO: Implement HomeController
+  RxInt currentCaraousel = 0.obs;
+  final CarouselController controllerCaraousel = CarouselController();
 
   List caraosel = [
     'https://radarcirebon.disway.id/upload/7ae51109cf523833c1f3f0e63be3c8de.PNG',

@@ -9,15 +9,23 @@ class CafeDetailView extends GetView<CafeDetailController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('CafeDetailView'),
-        centerTitle: true,
-      ),
-      body: const Center(
-        child: Text(
-          'CafeDetailView is working',
-          style: TextStyle(fontSize: 20),
-        ),
+      body: Stack(
+        children: <Widget>[
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: new AppBar(
+              title: new Text(
+                "Hello World",
+                style: TextStyle(color: Colors.amber),
+              ),
+              backgroundColor: Colors.transparent,
+              elevation: 0.0,
+            ),
+            body: new Container(
+              color: Colors.red,
+            ),
+          ),
+        ],
       ),
     );
   }
