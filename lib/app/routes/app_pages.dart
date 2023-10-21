@@ -8,6 +8,8 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/navbar/bindings/navbar_binding.dart';
 import '../modules/navbar/views/navbar_view.dart';
+import '../modules/radar/bindings/radar_binding.dart';
+import '../modules/radar/views/radar_view.dart';
 
 part 'app_routes.dart';
 
@@ -43,6 +45,11 @@ class AppPages {
       name: _Paths.NAVBAR,
       page: () => BasicMainNavigationView(),
       binding: NavbarBinding(),
+    ),
+    GetPage(
+      name: _Paths.RADAR,
+      page: () => const RadarView(),
+      binding: RadarBinding(),
     ),
   ];
 }

@@ -12,4 +12,8 @@ class Styles {
   static Color colorSecondary({Color? color}) {
     return Color.fromARGB(255, 85, 64, 31);
   }
+
+  static Color colorThird({Color? color}) {
+    return Color.fromARGB(255, 234, 149, 13);
+  }
 }

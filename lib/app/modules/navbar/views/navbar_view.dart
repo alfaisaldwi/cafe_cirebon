@@ -1,4 +1,5 @@
 import 'package:cafe_cirebon/app/modules/home/views/home_view.dart';
+import 'package:cafe_cirebon/app/modules/radar/views/radar_view.dart';
 import 'package:cafe_cirebon/app/style/color_primary.dart';
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -24,11 +25,9 @@ class _BasicMainNavigationViewState extends State<BasicMainNavigationView> {
           children: [
             HomeView(),
             Container(
-              color: Colors.red[100],
-            ),
-            Container(
               color: Colors.purple[100],
             ),
+            RadarView(),
             Container(
               color: Colors.blue[100],
             ),

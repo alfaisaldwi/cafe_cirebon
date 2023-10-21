@@ -73,6 +73,62 @@ class HomeController extends GetxController {
         },
       ],
     },
+    {
+      'name': 'MooCow Fresh Milk',
+      'location': '123 Main Street, City, Country',
+      'district': 'Central District',
+      'openingHours': '11:00 AM - 11:00 PM WIB',
+      'photos': [
+        'https://picsum.photos/id/237/200/300',
+        'https://picsum.photos/seed/picsum/200/300'
+      ],
+      'description': 'Coffee House 1 is a cozy cafe with a great ambiance.',
+      'phoneNumber': '+1234567890',
+      'latitude': 123.456,
+      'longitude': 78.901,
+      'reviews': [
+        {
+          'senderName': 'John Doe',
+          'comment': 'Great coffee and friendly staff!',
+          'rating': 4.5,
+          'date': '2023-10-01',
+        },
+        {
+          'senderName': 'Jane Smith',
+          'comment': 'Nice place to hang out.',
+          'rating': 4.0,
+          'date': '2023-09-28',
+        },
+      ],
+    },
+    {
+      'name': 'MooCow Fresh Milk',
+      'location': '123 Main Street, City, Country',
+      'district': 'Central District',
+      'openingHours': '11:00 AM - 11:00 PM WIB',
+      'photos': [
+        'https://picsum.photos/id/237/200/300',
+        'https://picsum.photos/seed/picsum/200/300'
+      ],
+      'description': 'Coffee House 1 is a cozy cafe with a great ambiance.',
+      'phoneNumber': '+1234567890',
+      'latitude': 123.456,
+      'longitude': 78.901,
+      'reviews': [
+        {
+          'senderName': 'John Doe',
+          'comment': 'Great coffee and friendly staff!',
+          'rating': 4.5,
+          'date': '2023-10-01',
+        },
+        {
+          'senderName': 'Jane Smith',
+          'comment': 'Nice place to hang out.',
+          'rating': 4.0,
+          'date': '2023-09-28',
+        },
+      ],
+    },
     // Add more cafes here as needed
   ].obs;
 

@@ -88,14 +88,14 @@ class HomeView extends GetView<HomeController> {
                               Icons.location_on_outlined,
                               color: Styles.colorPrimary(),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
                             Text(
                               controller.currentAddress.value.isNotEmpty
                                   ? ' ${controller.currentAddress.value}'
-                                  : 'Menunggu lokasi...',
-                              style: TextStyle(
+                                  : 'Mencari lokasi...',
+                              style: const TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -113,7 +113,7 @@ class HomeView extends GetView<HomeController> {
                   Card(
                     elevation: 0.0,
                     child: Stack(alignment: Alignment.center, children: [
-                      Container(
+                      SizedBox(
                         width: MediaQuery.of(context).size.width * 0.95,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(12.0),
@@ -164,7 +164,7 @@ class HomeView extends GetView<HomeController> {
                                             ),
                                           ),
                                         )
-                                      : SizedBox.shrink(),
+                                      : const SizedBox.shrink(),
                                 ),
                               ],
                             );
@@ -214,10 +214,9 @@ class HomeView extends GetView<HomeController> {
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            'Cafe Area',
+                            'Cafe di area',
                             style: TextStyle(
-                              fontSize: 16.0,
-                            ),
+                                fontSize: 16.0, fontWeight: FontWeight.w600),
                           ),
                         ),
                       ),
@@ -306,14 +305,14 @@ class HomeView extends GetView<HomeController> {
                       ),
                     ],
                   ),
-                  Divider(),
                   const Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+                    padding: EdgeInsets.only(top: 6.0, left: 20.0),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Saran kafe untukmu',
+                        'Saran cafe untukmu',
+                        style: TextStyle(
+                            fontSize: 16.0, fontWeight: FontWeight.w600),
                       ),
                     ),
                   ),
@@ -342,9 +341,10 @@ class HomeView extends GetView<HomeController> {
                       );
                     } else {
                       return SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.4,
+                        height: MediaQuery.of(context).size.height * 0.35,
                         width: MediaQuery.of(context).size.width,
                         child: ListView.builder(
+                          padding: EdgeInsets.only(left: 10),
                           physics: const ClampingScrollPhysics(),
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
@@ -364,66 +364,53 @@ class HomeView extends GetView<HomeController> {
                                   right: 8.0,
                                 ),
                                 child: Card(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12.0),
-                                  ),
-                                  color: Colors.white,
+                                  elevation: 2,
                                   child: Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.45,
                                     decoration: BoxDecoration(
+                                      // border: Border.all(
+                                      //   color: Styles.colorPrimary(),
+                                      //   width: 1,
+                                      // ),
                                       borderRadius: BorderRadius.circular(14.0),
-                                      color: Colors.grey.shade50,
+                                      color: Colors.white,
                                     ),
                                     child: Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                          CrossAxisAlignment.center,
                                       children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                cafe['name'],
-                                                style: const TextStyle(
-                                                    fontSize: 16),
-                                              ),
-                                              const SizedBox(
-                                                height: 5,
-                                              ),
-                                              Text(cafe['district'],
-                                                  style: const TextStyle(
-                                                      fontSize: 12))
-                                            ],
-                                          ),
-                                        ),
                                         Column(
                                           children: [
-                                            Container(
+                                            SizedBox(
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width *
-                                                  0.6,
+                                                  0.5,
                                               height: MediaQuery.of(context)
                                                       .size
                                                       .width *
-                                                  0.8 *
+                                                  0.65 *
                                                   (3 / 4),
                                               child: CachedNetworkImage(
                                                 imageUrl: cafe['photos'].first,
                                                 imageBuilder:
                                                     (context, imageProvider) =>
-                                                        ClipRRect(
-                                                  borderRadius:
-                                                      const BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(10.0),
-                                                    topRight:
-                                                        Radius.circular(10.0),
-                                                  ),
-                                                  child: Image(
-                                                    image: imageProvider,
-                                                    fit: BoxFit.fitWidth,
+                                                        Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        const BorderRadius.only(
+                                                      topLeft:
+                                                          Radius.circular(10.0),
+                                                      topRight:
+                                                          Radius.circular(10.0),
+                                                    ),
+                                                    child: Image(
+                                                      image: imageProvider,
+                                                      fit: BoxFit.fitWidth,
+                                                    ),
                                                   ),
                                                 ),
                                                 placeholder: (context, url) =>
@@ -455,40 +442,38 @@ class HomeView extends GetView<HomeController> {
                                             Padding(
                                               padding:
                                                   const EdgeInsets.symmetric(
-                                                horizontal: 2,
-                                                vertical: 5,
-                                              ),
+                                                      horizontal: 12.0),
                                               child: Column(
                                                 crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                    CrossAxisAlignment.center,
                                                 children: [
-                                                  const SizedBox(
-                                                    height: 4,
+                                                  Text(
+                                                    "${cafe['name']} asdadsadassdasadasdsadasdasd wda",
+                                                    maxLines: 2,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: const TextStyle(
+                                                        fontSize: 14),
                                                   ),
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        horizontal: 2.0),
-                                                    child: Column(
-                                                      children: [
-                                                        Text(
-                                                          cafe['openingHours'],
-                                                          style:
-                                                              const TextStyle(
-                                                            fontSize: 14,
-                                                            color:
-                                                                Color.fromRGBO(
-                                                                    133,
-                                                                    133,
-                                                                    133,
-                                                                    1),
-                                                          ),
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 2,
-                                                        ),
-                                                      ],
+                                                  const SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  Text(cafe['district'],
+                                                      style: const TextStyle(
+                                                          fontSize: 14)),
+                                                  const SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Text(
+                                                    cafe['openingHours'],
+                                                    style: const TextStyle(
+                                                      fontSize: 12,
+                                                      color: Color.fromRGBO(
+                                                          133, 133, 133, 1),
                                                     ),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 2,
                                                   ),
                                                 ],
                                               ),
