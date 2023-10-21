@@ -80,6 +80,7 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     requestLocationPermission();
+    getCurrentLocation();
     super.onInit();
   }
 

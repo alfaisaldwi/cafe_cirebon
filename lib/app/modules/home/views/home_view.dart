@@ -1,15 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cafe_cirebon/app/modules/navbar/views/navbar_view.dart';
 import 'package:cafe_cirebon/app/style/color_primary.dart';
-import 'package:cafe_cirebon/app/utils/convertToIdr.dart';
 import 'package:cafe_cirebon/app/widgets/drawer.dart';
 import 'package:cafe_cirebon/app/widgets/search_widget.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import 'package:get/get.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:search_page/search_page.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../controllers/home_controller.dart';
@@ -106,7 +103,9 @@ class HomeView extends GetView<HomeController> {
                             IconButton(
                               icon: Icon(Icons.refresh_outlined),
                               color: Styles.colorPrimary(),
-                              onPressed: () => controller.getCurrentLocation(),
+                              onPressed: () =>
+                                  Get.to(BasicMainNavigationView()),
+                              // onPressed: () => controller.getCurrentLocation(),
                             ),
                           ],
                         ),
