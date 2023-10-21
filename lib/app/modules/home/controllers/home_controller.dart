@@ -1,8 +1,14 @@
 import 'package:carousel_slider/carousel_controller.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:location/location.dart' as Loc;
+import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
 
 class HomeController extends GetxController {
   RxInt currentCaraousel = 0.obs;
+  final RxString currentAddress = ''.obs;
   final CarouselController controllerCaraousel = CarouselController();
 
   List caraosel = [
@@ -73,6 +79,7 @@ class HomeController extends GetxController {
   final count = 0.obs;
   @override
   void onInit() {
+    requestLocationPermission();
     super.onInit();
   }
 
@@ -87,4 +94,67 @@ class HomeController extends GetxController {
   }
 
   void increment() => count.value++;
+
+  Future<void> requestLocationPermission() async {
+    var status = await Permission.location.request();
+    if (status.isGranted) {
+      Loc.LocationData locationData = await Loc.Location().getLocation();
+    } else if (status.isDenied) {
+      showDialog(
+        context: Get.context!,
+        builder: (BuildContext context) => AlertDialog(
+          title: Text('Akses Lokasi Diperlukan'),
+          content: Text(
+              'Anda telah menolak izin lokasi. Buka pengaturan untuk mengizinkannya?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text('Tutup'),
+            ),
+            TextButton(
+              onPressed: () => openAppSettings(),
+              child: Text('Buka Pengaturan'),
+            ),
+          ],
+        ),
+      );
+    } else if (status.isPermanentlyDenied) {
+      showDialog(
+        context: Get.context!,
+        builder: (BuildContext context) => AlertDialog(
+          title: Text('Akses Lokasi Diperlukan'),
+          content: Text(
+              'Anda telah menolak izin lokasi secara permanen. Buka pengaturan untuk mengizinkannya?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text('Tutup'),
+            ),
+            TextButton(
+              onPressed: () => openAppSettings(),
+              child: Text('Buka Pengaturan'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
+  void getCurrentLocation() async {
+    try {
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+      List<Placemark> placemarks =
+          await placemarkFromCoordinates(position.latitude, position.longitude);
+      if (placemarks != null && placemarks.isNotEmpty) {
+        currentAddress.value =
+            '${placemarks.first.locality}, ${placemarks.first.subAdministrativeArea}, ${placemarks.first.administrativeArea}';
+      } else {
+        currentAddress.value = 'Lokasi tidak ditemukan';
+      }
+    } catch (e) {
+      print('Tidak dapat mengakses lokasi: $e');
+      currentAddress.value = 'Terjadi kesalahan';
+    }
+  }
 }

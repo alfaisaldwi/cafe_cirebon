@@ -83,6 +83,34 @@ class HomeView extends GetView<HomeController> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  Obx(() => Container(
+                        padding: EdgeInsets.only(left: 10),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.location_on_outlined,
+                              color: Styles.colorPrimary(),
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              controller.currentAddress.value.isNotEmpty
+                                  ? ' ${controller.currentAddress.value}'
+                                  : 'Menunggu lokasi...',
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.refresh_outlined),
+                              color: Styles.colorPrimary(),
+                              onPressed: () => controller.getCurrentLocation(),
+                            ),
+                          ],
+                        ),
+                      )),
                   Card(
                     elevation: 0.0,
                     child: Stack(alignment: Alignment.center, children: [
