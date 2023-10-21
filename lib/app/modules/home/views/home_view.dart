@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cafe_cirebon/app/style/color_primary.dart';
 import 'package:cafe_cirebon/app/utils/convertToIdr.dart';
+import 'package:cafe_cirebon/app/widgets/drawer.dart';
 import 'package:cafe_cirebon/app/widgets/search_widget.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -16,54 +17,59 @@ import '../controllers/home_controller.dart';
 class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.white,
-          title: Container(
-            width: double.infinity,
-            height: 40,
-            color: Colors.white,
-            child: Center(
-              child: GestureDetector(
-                onTap: () {
-                  SearchWidget.showCustomSearch(context, controller.cafeData);
-                },
-                child: Row(
-                  children: [SearchForm()],
-                ),
+        elevation: 0,
+        backgroundColor: Colors.white,
+        title: Container(
+          width: double.infinity,
+          height: 40,
+          color: Colors.white,
+          child: Center(
+            child: GestureDetector(
+              onTap: () {
+                SearchWidget.showCustomSearch(context, controller.cafeData);
+              },
+              child: Row(
+                children: [
+                  SearchForm(
+                    width: MediaQuery.sizeOf(context).width * 0.66,
+                  )
+                ],
               ),
             ),
           ),
-          actions: [
-            IconButton(
-              icon: GestureDetector(
-                onTap: () {
-                  // String? token = GetStorage().read('token');
-                  // if (token != null) {
-                  //   Get.toNamed('/cart');
-                  //   // Get.toNamed('/payment');
-                  // } else {
-                  //   Fluttertoast.showToast(
-                  //     msg: 'Silahkan Signin terlebih dahulu',
-                  //     toastLength: Toast.LENGTH_SHORT,
-                  //     gravity: ToastGravity.BOTTOM,
-                  //     backgroundColor: Colors.grey[800],
-                  //     textColor: Colors.white,
-                  //     fontSize: 14.0,
-                  //   );
-                  //   Get.toNamed('/profile');
-                  // }
-                },
-                child: const Icon(
-                  Icons.favorite_outline_rounded,
-                  color: Colors.black,
-                  size: 22,
+        ),
+        actions: [
+          Row(
+            children: [
+              IconButton(
+                icon: GestureDetector(
+                  onTap: () {},
+                  child: Icon(
+                    Icons.favorite_outline_rounded,
+                    color: Styles.colorPrimary(),
+                    size: 22,
+                  ),
                 ),
+                onPressed: () {},
               ),
-              onPressed: () {},
-            ),
-          ]),
+              IconButton(
+                icon: Icon(
+                  Icons.menu,
+                  color: Styles.colorPrimary(),
+                ),
+                onPressed: () {
+                  _scaffoldKey.currentState?.openEndDrawer();
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
+      endDrawer: CustomDrawer(),
       body: RefreshIndicator(
         onRefresh: () async {
           // controller.reFetch();
@@ -77,11 +83,39 @@ class HomeView extends GetView<HomeController> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  Obx(() => Container(
+                        padding: EdgeInsets.only(left: 10),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.location_on_outlined,
+                              color: Styles.colorPrimary(),
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              controller.currentAddress.value.isNotEmpty
+                                  ? ' ${controller.currentAddress.value}'
+                                  : 'Menunggu lokasi...',
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.refresh_outlined),
+                              color: Styles.colorPrimary(),
+                              onPressed: () => controller.getCurrentLocation(),
+                            ),
+                          ],
+                        ),
+                      )),
                   Card(
                     elevation: 0.0,
                     child: Stack(alignment: Alignment.center, children: [
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.9,
+                        width: MediaQuery.of(context).size.width * 0.95,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(12.0),
                           child: Obx(() {
@@ -90,9 +124,9 @@ class HomeView extends GetView<HomeController> {
                                 CarouselSlider(
                                   options: CarouselOptions(
                                     autoPlay: true,
-                                    enlargeCenterPage: true,
                                     viewportFraction: 1,
-                                    aspectRatio: 16 / 9,
+                                    height: MediaQuery.sizeOf(context).height *
+                                        0.25,
                                     onPageChanged: (index, reason) {
                                       controller.currentCaraousel.value = index;
                                     },
@@ -103,7 +137,7 @@ class HomeView extends GetView<HomeController> {
                                       imageBuilder: (context, imageProvider) =>
                                           Image(
                                         image: imageProvider,
-                                        fit: BoxFit.fitWidth,
+                                        fit: BoxFit.cover,
                                         width: 600,
                                         alignment: Alignment.center,
                                       ),
@@ -177,106 +211,99 @@ class HomeView extends GetView<HomeController> {
                   Column(
                     children: [
                       const Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 15.0, horizontal: 10),
+                        padding: EdgeInsets.only(top: 20, left: 20),
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            'Kategori',
+                            'Cafe Area',
+                            style: TextStyle(
+                              fontSize: 16.0,
+                            ),
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * .1 + 3,
-                        width: MediaQuery.of(context).size.width * .9,
-                        child: Obx(() => ListView.builder(
-                            physics: const ClampingScrollPhysics(),
-                            shrinkWrap: true,
-                            scrollDirection: Axis.horizontal,
-                            itemCount: controller.cafeData.length,
-                            itemBuilder: (context, index) {
-                              var district = controller.cafeData[index];
+                      LayoutBuilder(
+                        builder: (context, constraint) {
+                          List menus = [
+                            {
+                              "icon":
+                                  "https://cdn-icons-png.flaticon.com/512/12412/12412162.png",
+                              "label": "Cirebon Kota",
+                              "onTap": () {},
+                            },
+                            {
+                              "icon":
+                                  "https://cdn-icons-png.flaticon.com/512/4721/4721028.png",
+                              "label": "Cirebon Barat",
+                              "onTap": () {},
+                            },
+                            {
+                              "icon":
+                                  "https://cdn-icons-png.flaticon.com/512/12482/12482664.png",
+                              "label": "Cirebon Timur",
+                              "onTap": () {},
+                            },
+                            {
+                              "icon":
+                                  "https://cdn-icons-png.flaticon.com/512/12412/12412146.png",
+                              "label": "Cirebon Utara",
+                              "onTap": () {},
+                            },
+                          ];
 
-                              return GestureDetector(
-                                onTap: () async {
-                                  // var categoryDetail = await controller
-                                  //     .categotyDetail(category.id);
-                                  // print(category.id);
+                          return Wrap(
+                            children: List.generate(
+                              menus.length,
+                              (index) {
+                                var item = menus[index];
 
-                                  // Get.toNamed('category', arguments: [
-                                  //   categoryDetail,
-                                  //   category.title
-                                  // ]);
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.all(0),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 8.0, right: 8.0, bottom: 0.0),
+                                var size = constraint.biggest.width / 4;
+
+                                return SizedBox(
+                                  width: size,
+                                  height: size,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      foregroundColor: Colors.blueGrey,
+                                      animationDuration:
+                                          const Duration(milliseconds: 1000),
+                                      backgroundColor: Colors.transparent,
+                                      splashFactory: InkSplash.splashFactory,
+                                      shadowColor: Colors.transparent,
+                                      elevation: 0.0,
+                                    ),
+                                    onPressed: () {
+                                      Get.toNamed('area');
+                                    },
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
-                                        SizedBox(
-                                            height: 80,
-                                            width: 60,
-                                            child: Column(
-                                              children: [
-                                                // CachedNetworkImage(
-                                                //   imageUrl: ca,
-                                                //   imageBuilder: (context,
-                                                //           imageProvider) =>
-                                                //       Image(
-                                                //     image: imageProvider,
-                                                //     width: 43,
-                                                //     height: 43,
-                                                //     fit: BoxFit.fill,
-                                                //     alignment:
-                                                //         Alignment.center,
-                                                //   ),
-                                                //   placeholder:
-                                                //       (context, url) =>
-                                                //           Center(
-                                                //     child:
-                                                //         LoadingAnimationWidget
-                                                //             .flickr(
-                                                //       rightDotColor: Colors
-                                                //           .grey.shade200,
-                                                //       leftDotColor:
-                                                //           const Color(
-                                                //               0xfffd0079),
-                                                //       size: 25,
-                                                //     ),
-                                                //   ),
-                                                //   errorWidget:
-                                                //       (context, url, error) =>
-                                                //           const Icon(
-                                                //     Icons
-                                                //         .image_not_supported_rounded,
-                                                //     color: Colors.grey,
-                                                //   ),
-                                                // ),
-                                                Expanded(
-                                                  child: Align(
-                                                    alignment: Alignment.center,
-                                                    child: Text(
-                                                      district['district'],
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      maxLines: 2,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            )),
+                                        Image.network(
+                                          item["icon"],
+                                          width: 30.0,
+                                        ),
+                                        const SizedBox(
+                                          height: 6.0,
+                                        ),
+                                        Text(
+                                          "${item["label"]}",
+                                          textAlign: TextAlign.center,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                            fontSize: 11.0,
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ),
-                                ),
-                              );
-                            })),
+                                );
+                              },
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -329,8 +356,9 @@ class HomeView extends GetView<HomeController> {
                               onTap: () async {
                                 // var productDetails = await controller
                                 //     .fetchProductDetails(product.id);
-                                // Get.toNamed('product-detail',
-                                //     arguments: [productDetails]);
+                                Get.toNamed(
+                                  'cafe-detail',
+                                );
                               },
                               child: Padding(
                                 padding: const EdgeInsets.only(

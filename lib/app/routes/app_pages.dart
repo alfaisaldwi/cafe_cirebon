@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/area/bindings/area_binding.dart';
+import '../modules/area/views/area_view.dart';
 import '../modules/cafe_detail/bindings/cafe_detail_binding.dart';
 import '../modules/cafe_detail/bindings/cafe_detail_binding.dart';
 import '../modules/cafe_detail/views/cafe_detail_view.dart';
@@ -31,6 +33,11 @@ class AppPages {
           binding: CafeDetailBinding(),
         ),
       ],
+    ),
+    GetPage(
+      name: _Paths.AREA,
+      page: () => const AreaView(),
+      binding: AreaBinding(),
     ),
   ];
 }
