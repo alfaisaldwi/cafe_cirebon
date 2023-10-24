@@ -1,3 +1,4 @@
+import 'package:cafe_cirebon/app/utils/location_service.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,6 +19,7 @@ class HomeController extends GetxController {
   List category = [].obs;
   RxList<Map<String, dynamic>> cafeData = <Map<String, dynamic>>[
     {
+      'id': 1,
       'name': 'MooCow Fresh Milk',
       'location': '123 Main Street, City, Country',
       'district': 'Central District',
@@ -28,8 +30,8 @@ class HomeController extends GetxController {
       ],
       'description': 'Coffee House 1 is a cozy cafe with a great ambiance.',
       'phoneNumber': '+1234567890',
-      'latitude': 123.456,
-      'longitude': 78.901,
+      'latitude': -6.7189907,
+      'longitude': 108.5541722,
       'reviews': [
         {
           'senderName': 'John Doe',
@@ -46,7 +48,8 @@ class HomeController extends GetxController {
       ],
     },
     {
-      'name': 'Cafe 2',
+      'id': 2,
+      'name': 'Talk Cofee',
       'location': '456 Elm Street, City, Country',
       'district': 'North District',
       'openingHours': '10:00 AM - 10:00 PM WIB',
@@ -56,8 +59,8 @@ class HomeController extends GetxController {
       ],
       'description': 'Cafe 2 offers a variety of pastries and sandwiches.',
       'phoneNumber': '+9876543210',
-      'latitude': 98.765,
-      'longitude': 32.109,
+      'latitude': -6.723895,
+      'longitude': 108.5628135,
       'reviews': [
         {
           'senderName': 'Alice Johnson',
@@ -74,7 +77,8 @@ class HomeController extends GetxController {
       ],
     },
     {
-      'name': 'MooCow Fresh Milk',
+      'id': 3,
+      'name': 'Canggu Coffee',
       'location': '123 Main Street, City, Country',
       'district': 'Central District',
       'openingHours': '11:00 AM - 11:00 PM WIB',
@@ -84,8 +88,8 @@ class HomeController extends GetxController {
       ],
       'description': 'Coffee House 1 is a cozy cafe with a great ambiance.',
       'phoneNumber': '+1234567890',
-      'latitude': 123.456,
-      'longitude': 78.901,
+      'latitude': -6.7213973,
+      'longitude': 108.5479947,
       'reviews': [
         {
           'senderName': 'John Doe',
@@ -102,9 +106,11 @@ class HomeController extends GetxController {
       ],
     },
     {
-      'name': 'MooCow Fresh Milk',
-      'location': '123 Main Street, City, Country',
-      'district': 'Central District',
+      'id': 4,
+      'name': 'District 38',
+      'location':
+          'Jl. Pangeran Drajat No.47, Drajat, Kec. Kesambi, Kota Cirebon, Jawa Barat 45133',
+      'district': 'Kesambi',
       'openingHours': '11:00 AM - 11:00 PM WIB',
       'photos': [
         'https://picsum.photos/id/237/200/300',
@@ -112,8 +118,8 @@ class HomeController extends GetxController {
       ],
       'description': 'Coffee House 1 is a cozy cafe with a great ambiance.',
       'phoneNumber': '+1234567890',
-      'latitude': 123.456,
-      'longitude': 78.901,
+      'latitude': -6.7349962,
+      'longitude': 108.5603082,
       'reviews': [
         {
           'senderName': 'John Doe',
@@ -135,8 +141,7 @@ class HomeController extends GetxController {
   final count = 0.obs;
   @override
   void onInit() {
-    requestLocationPermission();
-    getCurrentLocation();
+    callLocationService();
     super.onInit();
   }
 
@@ -151,67 +156,9 @@ class HomeController extends GetxController {
   }
 
   void increment() => count.value++;
-
-  Future<void> requestLocationPermission() async {
-    var status = await Permission.location.request();
-    if (status.isGranted) {
-      Loc.LocationData locationData = await Loc.Location().getLocation();
-    } else if (status.isDenied) {
-      showDialog(
-        context: Get.context!,
-        builder: (BuildContext context) => AlertDialog(
-          title: Text('Akses Lokasi Diperlukan'),
-          content: Text(
-              'Anda telah menolak izin lokasi. Buka pengaturan untuk mengizinkannya?'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: Text('Tutup'),
-            ),
-            TextButton(
-              onPressed: () => openAppSettings(),
-              child: Text('Buka Pengaturan'),
-            ),
-          ],
-        ),
-      );
-    } else if (status.isPermanentlyDenied) {
-      showDialog(
-        context: Get.context!,
-        builder: (BuildContext context) => AlertDialog(
-          title: Text('Akses Lokasi Diperlukan'),
-          content: Text(
-              'Anda telah menolak izin lokasi secara permanen. Buka pengaturan untuk mengizinkannya?'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: Text('Tutup'),
-            ),
-            TextButton(
-              onPressed: () => openAppSettings(),
-              child: Text('Buka Pengaturan'),
-            ),
-          ],
-        ),
-      );
-    }
-  }
-
-  void getCurrentLocation() async {
-    try {
-      Position position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
-      List<Placemark> placemarks =
-          await placemarkFromCoordinates(position.latitude, position.longitude);
-      if (placemarks != null && placemarks.isNotEmpty) {
-        currentAddress.value =
-            '${placemarks.first.locality}, ${placemarks.first.subAdministrativeArea}, ${placemarks.first.administrativeArea}';
-      } else {
-        currentAddress.value = 'Lokasi tidak ditemukan';
-      }
-    } catch (e) {
-      print('Tidak dapat mengakses lokasi: $e');
-      currentAddress.value = 'Terjadi kesalahan';
-    }
+  void callLocationService() {
+    var location = Get.find<LocationService>();
+    location.requestLocationPermission();
+    location.getCurrentLocation();
   }
 }

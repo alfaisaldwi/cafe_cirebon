@@ -48,7 +48,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.RADAR,
-      page: () => const RadarView(),
+      page: () => RadarView(),
       binding: RadarBinding(),
     ),
   ];

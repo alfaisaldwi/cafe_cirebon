@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cafe_cirebon/app/modules/navbar/views/navbar_view.dart';
 import 'package:cafe_cirebon/app/style/color_primary.dart';
+import 'package:cafe_cirebon/app/utils/location_service.dart';
 import 'package:cafe_cirebon/app/widgets/drawer.dart';
 import 'package:cafe_cirebon/app/widgets/search_widget.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -81,7 +82,7 @@ class HomeView extends GetView<HomeController> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Obx(() => Container(
-                        padding: EdgeInsets.only(left: 10),
+                        padding: const EdgeInsets.only(left: 10),
                         child: Row(
                           children: [
                             Icon(
@@ -103,9 +104,7 @@ class HomeView extends GetView<HomeController> {
                             IconButton(
                               icon: Icon(Icons.refresh_outlined),
                               color: Styles.colorPrimary(),
-                              onPressed: () =>
-                                  Get.to(BasicMainNavigationView()),
-                              // onPressed: () => controller.getCurrentLocation(),
+                              onPressed: () => controller.callLocationService(),
                             ),
                           ],
                         ),
