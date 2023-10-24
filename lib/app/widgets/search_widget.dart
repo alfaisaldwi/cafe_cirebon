@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:search_page/search_page.dart';
 
 class SearchWidget {
-  static showCustomSearch(
-      BuildContext context, List<dynamic> products) {
+  static showCustomSearch(BuildContext context, List<dynamic> products) {
     showSearch(
       context: context,
       delegate: SearchPage(
@@ -53,11 +52,10 @@ class SearchForm extends StatelessWidget {
           border:
               InputBorder.none, // Hapus border pada input decoration TextField
           hintText: 'Cari Cafe',
-          hintStyle: TextStyle(fontSize: 15, color: Styles.colorPrimary()),
+          hintStyle: TextStyle(fontSize: 16, color: Styles.colorPrimary()),
           prefixIcon: Icon(
             Icons.search_outlined,
             color: Styles.colorPrimary(),
-            size: 16,
           ),
         ),
       ),
