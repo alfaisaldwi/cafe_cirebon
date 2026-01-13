@@ -1,11 +1,7 @@
 import 'package:cafe_cirebon/app/utils/location_service.dart';
-import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
+// import 'package:carousel_slider/carousel_controller.dart' as carosel_slider;
 import 'package:get/get.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:location/location.dart' as Loc;
-import 'package:geolocator/geolocator.dart';
-import 'package:geocoding/geocoding.dart';
 
 class HomeController extends GetxController {
   RxInt currentCaraousel = 0.obs;
@@ -157,7 +153,7 @@ class HomeController extends GetxController {
 
   void increment() => count.value++;
   void callLocationService() {
-    var location = Get.find<LocationService>();
+    LocationService location = Get.put(LocationService());
     location.requestLocationPermission();
     location.getCurrentLocation();
   }

@@ -181,7 +181,9 @@ class HomeView extends GetView<HomeController> {
                                 .map((entry) {
                               return GestureDetector(
                                 onTap: () => controller.controllerCaraousel
-                                    .animateToPage(entry.key),
+                                    .animateTo(1,
+                                        duration: Duration(seconds: 1),
+                                        curve: Curves.easeInOut),
                                 child: Container(
                                   width: 6.0,
                                   height: 6.0,

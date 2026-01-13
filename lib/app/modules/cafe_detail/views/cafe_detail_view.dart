@@ -90,8 +90,9 @@ class CafeDetailView extends GetView<CafeDetailController> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: homeC.caraosel.asMap().entries.map((entry) {
                     return GestureDetector(
-                      onTap: () =>
-                          homeC.controllerCaraousel.animateToPage(entry.key),
+                      onTap: () => homeC.controllerCaraousel.animateTo(1,
+                          duration: Duration(seconds: 1),
+                          curve: Curves.easeInOut),
                       child: Container(
                         width: 6.0,
                         height: 6.0,
@@ -121,7 +122,6 @@ class CafeDetailView extends GetView<CafeDetailController> {
             ),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  
               Text('Moocoow Cafe'),
               Text('Jl. Arya Kemuning'),
             ]),
